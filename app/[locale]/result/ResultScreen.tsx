@@ -6,6 +6,11 @@ import { useQuiz } from "@/lib/quizState/QuizProvider";
 import { getScore } from "@/lib/quizState/reducer";
 import { formatElapsed } from "@/lib/quiz/formatTime";
 import { getResultBracket, type ResultBracket } from "@/lib/quiz/getResultBracket";
+import { Container } from "@/components/layout/Container";
+import { PageHeader } from "@/components/layout/PageHeader";
+import { BackgroundLines } from "@/components/layout/BackgroundLines";
+import { BackgroundMap } from "@/components/layout/BackgroundMap";
+import { ResultCover } from "@/components/result/ResultCover";
 import type { Locale } from "@/lib/i18n/locales";
 
 interface ResultCopy {
@@ -14,7 +19,7 @@ interface ResultCopy {
   timeCaption: string;
   noteTitle: string;
   noteDescription: string;
-  brackets: Record<ResultBracket, { title: string; description: string }>;
+  brackets: Record<ResultBracket, { title: string; description: string; coverPhotoSrc: string }>;
 }
 
 export function ResultScreen({
@@ -39,22 +44,70 @@ export function ResultScreen({
 
   const score = getScore(state);
   const bracket = getResultBracket(score);
-  const { title, description } = copy.brackets[bracket];
+  const { title, description, coverPhotoSrc } = copy.brackets[bracket];
   const time = formatElapsed(state.finalElapsedSeconds ?? state.elapsedSeconds);
 
   return (
-    <main>
-      <p>{copy.label}</p>
-      <h1>{title}</h1>
-      <p>{description}</p>
-      <p>
-        {copy.answersCaption}: {score} / {totalQuestions}
-      </p>
-      <p>
-        {copy.timeCaption}: {time}
-      </p>
-      <h2>{copy.noteTitle}</h2>
-      <p>{copy.noteDescription}</p>
+    <main className="relative isolate flex min-h-screen flex-col items-center overflow-hidden bg-fill-white">
+      <div className="relative z-[4] w-full">
+        <PageHeader />
+      </div>
+      <BackgroundMap zIndexClassName="z-[1] desktop:z-[2]" />
+      <BackgroundLines zIndexClassName="z-[2] desktop:z-[1]" />
+      <section className="relative z-[3] flex w-full flex-1 flex-col items-center">
+        <Container className="flex flex-col items-center py-[32px] desktop:py-[42px]">
+          <div className="flex w-full max-w-[542px] flex-col items-center gap-[42px] desktop:gap-[56px]">
+            <ResultCover photoSrc={coverPhotoSrc} />
+
+            <div className="flex w-full flex-col items-center gap-[24px] desktop:gap-[32px]">
+              <div className="flex w-full flex-col items-center gap-[10px]">
+                <div className="flex h-[32px] items-center justify-center rounded-[10px] bg-[linear-gradient(90deg,#00b2a9_0%,#0060b2_100%)] px-[13px] text-mobile-body-regular-bold text-text-white desktop:h-[42px] desktop:rounded-[13px] desktop:px-[18px] desktop:text-desktop-body-regular-bold">
+                  {copy.label}
+                </div>
+                <h1 className="w-full text-center text-mobile-heading-h2 text-text-primary desktop:text-desktop-heading-h2">
+                  {title}
+                </h1>
+              </div>
+
+              <div className="flex w-full items-center justify-center gap-[18px] text-center text-text-primary desktop:gap-[32px]">
+                <div className="flex flex-1 flex-col items-center gap-[8px] rounded-[32px] bg-fill-grey-pale px-[18px] pb-[24px] pt-[18px] desktop:gap-[13px] desktop:pb-[32px] desktop:pt-[24px]">
+                  <p className="text-mobile-body-large-bold desktop:text-desktop-body-large-bold">✅</p>
+                  <div className="flex w-full flex-col items-start">
+                    <p className="w-full text-mobile-body-large-bold desktop:text-desktop-body-large-bold">
+                      {score}/{totalQuestions}
+                    </p>
+                    <p className="w-full text-mobile-body-small desktop:text-desktop-body-small">
+                      {copy.answersCaption}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex flex-1 flex-col items-center gap-[8px] rounded-[32px] bg-fill-grey-pale px-[18px] pb-[24px] pt-[18px] desktop:gap-[13px] desktop:pb-[32px] desktop:pt-[24px]">
+                  <p className="text-mobile-body-large-bold desktop:text-desktop-body-large-bold">⏱️</p>
+                  <div className="flex w-full flex-col items-start">
+                    <p className="w-full text-mobile-body-large-bold desktop:text-desktop-body-large-bold">{time}</p>
+                    <p className="w-full text-mobile-body-small desktop:text-desktop-body-small">
+                      {copy.timeCaption}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <p className="w-full text-center text-mobile-body-regular-bold text-text-primary desktop:text-desktop-body-regular-bold">
+                {description}
+              </p>
+            </div>
+
+            <div className="flex w-full flex-col items-center gap-[6px] rounded-[24px] border-2 border-border-light bg-fill-white px-[24px] py-[32px] text-center text-text-primary desktop:gap-[10px] desktop:rounded-[32px] desktop:py-[42px]">
+              <p className="w-full text-mobile-body-regular-bold desktop:text-desktop-body-medium-bold">
+                {copy.noteTitle}
+              </p>
+              <p className="w-full text-mobile-body-regular desktop:text-desktop-body-regular">
+                {copy.noteDescription}
+              </p>
+            </div>
+          </div>
+        </Container>
+      </section>
     </main>
   );
 }
