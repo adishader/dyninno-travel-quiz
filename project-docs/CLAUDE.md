@@ -129,8 +129,13 @@ Use this pattern to identify which frame corresponds to which breakpoint for eve
   - Start / "Check Result" button: Default, Hover, Disabled/Loading
 
 ### Question page item — UI states
-- Link to the UI states design in Figma: **https://www.figma.com/design/RWPLFFvtvIZ4qJNxVnn6CU/Trevolution.-Travel-Day-Quiz?node-id=4203-4064&t=NBLumTZqzUbsX5jU-1**
-- Use the Figma **frame names as the state guide** — each state is its own frame, named `Question / [State Name]` (e.g. `Question / Default state`, `Question / Active or Hover state`, and so on for every state shown in that section). Match each frame's styling to the corresponding UI state in code exactly as named, rather than inferring states from the general Question screen alone.
+Direct links per state (provided individually, since this Figma file has been confirmed unable to be enumerated/searched by frame name — see the note under "Page design sources" above):
+- **Default**: https://www.figma.com/design/RWPLFFvtvIZ4qJNxVnn6CU/Trevolution.-Travel-Day-Quiz?node-id=4203-4064&t=NBLumTZqzUbsX5jU-1
+- **Active / Hover**: https://www.figma.com/design/RWPLFFvtvIZ4qJNxVnn6CU/Trevolution.-Travel-Day-Quiz?node-id=4203-3906&t=NBLumTZqzUbsX5jU-1
+- **Correct (user's answer)**: https://www.figma.com/design/RWPLFFvtvIZ4qJNxVnn6CU/Trevolution.-Travel-Day-Quiz?node-id=4203-4266&t=NBLumTZqzUbsX5jU-1
+- **Wrong (user's answer)**: https://www.figma.com/design/RWPLFFvtvIZ4qJNxVnn6CU/Trevolution.-Travel-Day-Quiz?node-id=4203-4285&t=NBLumTZqzUbsX5jU-1
+
+Match each frame's styling to its corresponding UI state in code exactly, rather than inferring states from the Default frame alone.
 
 ### Images / Assets
 - Use the Figma link above to collect all UI images.
