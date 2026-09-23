@@ -15,7 +15,8 @@ export default async function HomePage({
       locale={locale}
       logoSrc="/images/home/home-logo.svg"
       mapBgSrc="/images/home/home-map-bg.svg"
-      heroImageSrc="/images/home/home-hero-desk.webp"
+      heroImageDeskSrc="/images/home/home-hero-desk.webp"
+      heroImageMobSrc="/images/home/home-hero-mob.webp"
       label={dict["home.label"]}
       title={dict["home.title"]}
       description={dict["home.description"]}

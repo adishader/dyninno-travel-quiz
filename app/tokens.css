@@ -3,6 +3,10 @@
 @theme {
   --font-metropolis: 'Metropolis', ui-sans-serif, system-ui, sans-serif;
 
+  /* CLAUDE.md's exact Desktop cutoff (1025px+; Mobile is 1024px and below) — not a stock Tailwind breakpoint. */
+  /* Base (unprefixed) utilities are mobile-first; use `desktop:` for the 1025px+ override. */
+  --breakpoint-desktop: 1025px;
+
   /* Colors — project-docs/trevo-design-tokens.tokens.json: tokens.{fill,text,border} */
   --color-fill-grey-pale: #f5f7fa;
   --color-fill-white: #ffffff;

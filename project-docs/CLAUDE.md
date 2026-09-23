@@ -98,11 +98,11 @@ Results go to a **Google Sheet**, connected via a **Google Apps Script Web App**
 
 ### Page design sources (Figma)
 Direct links to each page's design source, within the same Figma file above:
-- **Home page**: https://www.figma.com/design/RWPLFFvtvIZ4qJNxVnn6CU/Trevolution.-Travel-Day-Quiz?node-id=4145-46401&t=NBLumTZqzUbsX5jU-1
-- **Start page**: https://www.figma.com/design/RWPLFFvtvIZ4qJNxVnn6CU/Trevolution.-Travel-Day-Quiz?node-id=4145-47546&t=NBLumTZqzUbsX5jU-1
-- **Question page**: https://www.figma.com/design/RWPLFFvtvIZ4qJNxVnn6CU/Trevolution.-Travel-Day-Quiz?node-id=4145-47653&t=NBLumTZqzUbsX5jU-1
-- **Finish page**: https://www.figma.com/design/RWPLFFvtvIZ4qJNxVnn6CU/Trevolution.-Travel-Day-Quiz?node-id=4175-49135&t=NBLumTZqzUbsX5jU-1
-- **Result page**: https://www.figma.com/design/RWPLFFvtvIZ4qJNxVnn6CU/Trevolution.-Travel-Day-Quiz?node-id=4145-47753&t=NBLumTZqzUbsX5jU-1
+- **Home page**: https://www.figma.com/design/RWPLFFvtvIZ4qJNxVnn6CU/Trevolution.-Travel-Day-Quiz?node-id=4145-46401&t=NBLumTZqzUbsX5jU-1 — **Mobile frame direct link**: https://www.figma.com/design/RWPLFFvtvIZ4qJNxVnn6CU/Trevolution.-Travel-Day-Quiz?node-id=4097-41418&t=NBLumTZqzUbsX5jU-1
+- **Start page**: https://www.figma.com/design/RWPLFFvtvIZ4qJNxVnn6CU/Trevolution.-Travel-Day-Quiz?node-id=4145-47546&t=NBLumTZqzUbsX5jU-1 — **Mobile frame direct link**: https://www.figma.com/design/RWPLFFvtvIZ4qJNxVnn6CU/Trevolution.-Travel-Day-Quiz?node-id=4175-49571&t=NBLumTZqzUbsX5jU-1
+- **Question page**: https://www.figma.com/design/RWPLFFvtvIZ4qJNxVnn6CU/Trevolution.-Travel-Day-Quiz?node-id=4145-47653&t=NBLumTZqzUbsX5jU-1 — **Mobile frame direct link**: https://www.figma.com/design/RWPLFFvtvIZ4qJNxVnn6CU/Trevolution.-Travel-Day-Quiz?node-id=4145-47703&t=NBLumTZqzUbsX5jU-1
+- **Finish page**: https://www.figma.com/design/RWPLFFvtvIZ4qJNxVnn6CU/Trevolution.-Travel-Day-Quiz?node-id=4175-49135&t=NBLumTZqzUbsX5jU-1 — **Mobile frame direct link**: https://www.figma.com/design/RWPLFFvtvIZ4qJNxVnn6CU/Trevolution.-Travel-Day-Quiz?node-id=4175-49185&t=NBLumTZqzUbsX5jU-1
+- **Result page**: https://www.figma.com/design/RWPLFFvtvIZ4qJNxVnn6CU/Trevolution.-Travel-Day-Quiz?node-id=4145-47753&t=NBLumTZqzUbsX5jU-1 — **Mobile frame direct link**: https://www.figma.com/design/RWPLFFvtvIZ4qJNxVnn6CU/Trevolution.-Travel-Day-Quiz?node-id=4145-47947&t=NBLumTZqzUbsX5jU-1
 
 Frame naming reflects the device/screen size each frame targets: `[Page Name] / [Device] / [Width]`. For example:
 ```
@@ -113,7 +113,7 @@ Quiz-Home / Mobile / 390
 ```
 Use this pattern to identify which frame corresponds to which breakpoint for every page above — the same naming convention applies across Home, Start, Question, Finish, and Result frames.
 
-**Important**: all breakpoint variants for a given page (e.g. all 4 `Quiz-Home / ...` frames) live on the **same Figma page, as sibling frames** — they are not separate files or separate node-id links. The single link given for each page above is sufficient to access every breakpoint of that page; locate the specific frame you need by its **name** (per the pattern above) within that page, rather than expecting or requesting a distinct URL per breakpoint. If your Figma tooling cannot enumerate/search frames by name within a page (e.g. due to file size), say so explicitly rather than assuming a new link is needed — that's a tooling limitation to flag, not a missing link to ask for.
+**Important**: all breakpoint variants for a given page (e.g. all 4 `Quiz-Home / ...` frames) live on the **same Figma page, as sibling frames** — they are not separate files. In practice, the Figma tooling in use has **not been able to enumerate/search frames by name within a page** (the file is large), so a **direct Mobile-frame link is provided per page above** rather than relying on name-based lookup within the Desktop link. Use the Desktop link for desktop frames and the paired Mobile link for mobile frames on each page. If additional specific frames (e.g. a particular UI state) are needed and can't be located via the page link, flag it and a direct link will be provided the same way — this is a known tooling limitation, not something to keep re-attempting via auto-discovery.
 
 - Frames are organized as `Desktop / [Screen Name]` and `Mobile / [Screen Name]` pairs — same screen names across both, so each pair represents one responsive page. Expected screens: Home, Start, Quiz Question, Answer Feedback, Finish + Form, Result (Low/Mid/High).
 - Breakpoint: **Desktop** is screen width **1025px and above**; **Mobile** is **1024px and below** (1024 included in mobile).
