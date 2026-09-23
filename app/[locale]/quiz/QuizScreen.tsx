@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useQuiz } from "@/lib/quizState/QuizProvider";
 import { formatElapsed } from "@/lib/quiz/formatTime";
-import { feedbackMessages, pickFeedbackMessage } from "@/lib/quiz/feedbackMessages";
+import { getFeedbackPool, pickFeedbackMessage } from "@/lib/quiz/feedbackMessages";
+import { t, type Dictionary } from "@/lib/i18n/getDictionary";
 import type { Locale } from "@/lib/i18n/locales";
 import type { OptionLetter, QuizQuestion } from "@/lib/quiz/types";
 
@@ -16,10 +17,12 @@ function QuestionCard({
   locale,
   question,
   isLastQuestion,
+  dict,
 }: {
   locale: Locale;
   question: QuizQuestion;
   isLastQuestion: boolean;
+  dict: Dictionary;
 }) {
   const router = useRouter();
   const { dispatch } = useQuiz();
@@ -39,7 +42,7 @@ function QuestionCard({
     const isCorrect = selected === question.correct;
     dispatch({ type: "ANSWER", questionId: question.id, selected, correct: isCorrect });
 
-    const pool = isCorrect ? feedbackMessages[locale].correct : feedbackMessages[locale].wrong;
+    const pool = getFeedbackPool(dict, isCorrect ? "correct" : "wrong");
     setFeedback({ isCorrect, message: pickFeedbackMessage(pool) });
 
     advanceTimer.current = setTimeout(() => {
@@ -83,13 +86,21 @@ function QuestionCard({
         })}
       </ul>
       <button type="button" onClick={handleSubmit} disabled={!selected || !!feedback}>
-        {feedback ? feedback.message : "Submit"}
+        {feedback ? feedback.message : t(dict, "quiz.submit_button_default")}
       </button>
     </>
   );
 }
 
-export function QuizScreen({ locale, questions }: { locale: Locale; questions: QuizQuestion[] }) {
+export function QuizScreen({
+  locale,
+  questions,
+  dict,
+}: {
+  locale: Locale;
+  questions: QuizQuestion[];
+  dict: Dictionary;
+}) {
   const router = useRouter();
   const { state } = useQuiz();
 
@@ -113,7 +124,7 @@ export function QuizScreen({ locale, questions }: { locale: Locale; questions: Q
   return (
     <main>
       <p>Timer: {formatElapsed(state.elapsedSeconds)}</p>
-      <QuestionCard key={question.id} locale={locale} question={question} isLastQuestion={isLastQuestion} />
+      <QuestionCard key={question.id} locale={locale} question={question} isLastQuestion={isLastQuestion} dict={dict} />
     </main>
   );
 }

@@ -109,5 +109,16 @@
   "q15.option_a": "Fontana di Trevi – Roma",
   "q15.option_b": "Acrópolis – Atenas",
   "q15.option_c": "Golden Gate Bridge – Los Ángeles",
-  "q15.option_d": "Marina Bay Sands – Singapur"
+  "q15.option_d": "Marina Bay Sands – Singapur",
+  "quiz.submit_button_default": "Enviar",
+  "feedback.correct.1": "¡Correcto! 🥳",
+  "feedback.correct.2": "¡Vaya! 👏",
+  "feedback.correct.3": "¡Increíble! 🤩",
+  "feedback.correct.4": "¡Acertaste! 💅",
+  "feedback.correct.5": "¡Estás que ardes! 💃",
+  "feedback.wrong.1": "Ahora ya lo sabes... 🤷🏻‍♀️",
+  "feedback.wrong.2": "¡Tan cerca! 👀",
+  "feedback.wrong.3": "Siempre se aprende 🧐",
+  "feedback.wrong.4": "Hmmm 🤔",
+  "feedback.wrong.5": "Ups 🙈"
 }
