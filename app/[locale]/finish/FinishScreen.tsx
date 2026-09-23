@@ -3,6 +3,9 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { useQuiz } from "@/lib/quizState/QuizProvider";
+import { getScore } from "@/lib/quizState/reducer";
+import { formatElapsed } from "@/lib/quiz/formatTime";
+import { submitQuizResult } from "@/lib/submit";
 import { companyOfficeOptions, type CompanyOfficeOption } from "@/lib/quiz/companyOptions";
 import { Container } from "@/components/layout/Container";
 import { PageHeader } from "@/components/layout/PageHeader";
@@ -30,6 +33,8 @@ export function FinishScreen({ locale, copy }: { locale: Locale; copy: FinishCop
   const [fullName, setFullName] = useState("");
   const [companyOffice, setCompanyOffice] = useState<CompanyOfficeOption | "">("");
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
 
   useEffect(() => {
     if (state.status !== "finished") {
@@ -42,14 +47,28 @@ export function FinishScreen({ locale, copy }: { locale: Locale; copy: FinishCop
   const nameError = submitted && fullName.trim() === "";
   const companyError = submitted && companyOffice === "";
 
-  const handleSubmit = (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     setSubmitted(true);
-    if (fullName.trim() === "" || companyOffice === "") return;
+    if (fullName.trim() === "" || companyOffice === "" || isSubmitting) return;
 
-    // Actual POST to /api/submit (Build Order step 9) is not wired up yet —
-    // this only verifies the state machine transitions correctly.
-    router.push(`/${locale}/result`);
+    setSubmitError(false);
+    setIsSubmitting(true);
+    try {
+      await submitQuizResult({
+        fullName: fullName.trim(),
+        companyOffice: copy.companyLabels[companyOffice],
+        score: getScore(state),
+        completionTime: formatElapsed(state.finalElapsedSeconds ?? state.elapsedSeconds),
+        completionTimeSeconds: state.finalElapsedSeconds ?? state.elapsedSeconds,
+        timestamp: new Date().toISOString(),
+        language: locale.toUpperCase() as "EN" | "ES",
+      });
+      router.push(`/${locale}/result`);
+    } catch {
+      setIsSubmitting(false);
+      setSubmitError(true);
+    }
   };
 
   return (
@@ -99,10 +118,16 @@ export function FinishScreen({ locale, copy }: { locale: Locale; copy: FinishCop
 
               <Button
                 type="submit"
-                className="h-[56px] w-full gap-[6px] rounded-[18px] px-[18px] text-desktop-body-small-bold desktop:h-[74px] desktop:gap-[10px] desktop:rounded-[24px] desktop:px-[24px] desktop:text-desktop-body-regular-bold"
+                disabled={isSubmitting}
+                className="h-[56px] w-full gap-[6px] rounded-[18px] px-[18px] text-desktop-body-small-bold disabled:cursor-not-allowed disabled:opacity-60 desktop:h-[74px] desktop:gap-[10px] desktop:rounded-[24px] desktop:px-[24px] desktop:text-desktop-body-regular-bold"
               >
                 {copy.button}
               </Button>
+              {submitError && (
+                <p role="alert" className="w-full text-center text-desktop-body-small text-[#fa3737]">
+                  Something went wrong submitting your result — please try again.
+                </p>
+              )}
             </form>
 
             <p className="w-full text-center text-desktop-body-tiny-bold text-text-secondary">{copy.policy}</p>
