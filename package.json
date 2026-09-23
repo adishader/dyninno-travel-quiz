@@ -10,6 +10,7 @@
     "gen:translations": "python3 scripts/translations-to-json.py"
   },
   "dependencies": {
+    "framer-motion": "^13.4.2",
     "next": "16.3.6",
     "react": "19.2.8",
     "react-dom": "19.2.8"

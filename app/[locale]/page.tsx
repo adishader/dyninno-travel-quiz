@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { getDictionary } from "@/lib/i18n/getDictionary";
 import type { Locale } from "@/lib/i18n/locales";
+import { HomeHero } from "@/components/home/HomeHero";
 
 export default async function HomePage({
   params,
@@ -11,11 +11,15 @@ export default async function HomePage({
   const dict = await getDictionary(locale);
 
   return (
-    <main>
-      <p>{dict["home.label"]}</p>
-      <h1>{dict["home.title"]}</h1>
-      <p>{dict["home.description"]}</p>
-      <Link href={`/${locale}/start`}>{dict["home.button"]}</Link>
-    </main>
+    <HomeHero
+      locale={locale}
+      logoSrc="/images/home/home-logo.svg"
+      mapBgSrc="/images/home/home-map-bg.svg"
+      heroImageSrc="/images/home/home-hero-desk.webp"
+      label={dict["home.label"]}
+      title={dict["home.title"]}
+      description={dict["home.description"]}
+      buttonLabel={dict["home.button"]}
+    />
   );
 }

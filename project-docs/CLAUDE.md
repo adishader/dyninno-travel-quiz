@@ -113,6 +113,8 @@ Quiz-Home / Mobile / 390
 ```
 Use this pattern to identify which frame corresponds to which breakpoint for every page above — the same naming convention applies across Home, Start, Question, Finish, and Result frames.
 
+**Important**: all breakpoint variants for a given page (e.g. all 4 `Quiz-Home / ...` frames) live on the **same Figma page, as sibling frames** — they are not separate files or separate node-id links. The single link given for each page above is sufficient to access every breakpoint of that page; locate the specific frame you need by its **name** (per the pattern above) within that page, rather than expecting or requesting a distinct URL per breakpoint. If your Figma tooling cannot enumerate/search frames by name within a page (e.g. due to file size), say so explicitly rather than assuming a new link is needed — that's a tooling limitation to flag, not a missing link to ask for.
+
 - Frames are organized as `Desktop / [Screen Name]` and `Mobile / [Screen Name]` pairs — same screen names across both, so each pair represents one responsive page. Expected screens: Home, Start, Quiz Question, Answer Feedback, Finish + Form, Result (Low/Mid/High).
 - Breakpoint: **Desktop** is screen width **1025px and above**; **Mobile** is **1024px and below** (1024 included in mobile).
 - Main content container (Figma layer named `content`): full-bleed wrapper with these constraints —
