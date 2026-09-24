@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { useQuiz } from "@/lib/quizState/QuizProvider";
@@ -11,6 +11,7 @@ import { Container } from "@/components/layout/Container";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { BackgroundLines } from "@/components/layout/BackgroundLines";
 import { BackgroundMap } from "@/components/layout/BackgroundMap";
+import { LoadingScreen } from "@/components/layout/LoadingScreen";
 import { ResultCover } from "@/components/result/ResultCover";
 import { fadeUp } from "@/lib/animation/fadeUp";
 import type { Locale } from "@/lib/i18n/locales";
@@ -35,6 +36,7 @@ export function ResultScreen({
 }) {
   const router = useRouter();
   const { state } = useQuiz();
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     if (state.status !== "finished") {
@@ -51,6 +53,7 @@ export function ResultScreen({
 
   return (
     <main className="relative isolate flex min-h-screen flex-col items-center overflow-hidden bg-fill-white">
+      <LoadingScreen onDone={() => setLoaded(true)} />
       <div className="relative z-[4] w-full">
         <PageHeader />
       </div>
@@ -60,7 +63,7 @@ export function ResultScreen({
         <Container className="flex flex-col items-center py-[32px] desktop:py-[42px]">
           <motion.div
             initial="hidden"
-            animate="visible"
+            animate={loaded ? "visible" : "hidden"}
             className="flex w-full max-w-[542px] flex-col items-center gap-[42px] desktop:gap-[56px]"
           >
             <motion.div custom={0} variants={fadeUp} className="w-full">

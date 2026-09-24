@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { LinkButton } from "@/components/ui/Button";
 import { Container } from "@/components/layout/Container";
 import { BackgroundMap } from "@/components/layout/BackgroundMap";
+import { LoadingScreen } from "@/components/layout/LoadingScreen";
 import { fadeUp } from "@/lib/animation/fadeUp";
 
 const DESKTOP_QUERY = "(min-width: 1025px)";
@@ -44,6 +45,7 @@ export function HomeHero({
   description: string;
   buttonLabel: string;
 }) {
+  const [loaded, setLoaded] = useState(false);
   const pointerX = useMotionValue(0);
   const pointerY = useMotionValue(0);
 
@@ -65,6 +67,7 @@ export function HomeHero({
 
   return (
     <main className="relative isolate min-h-screen overflow-hidden bg-fill-white">
+      <LoadingScreen onDone={() => setLoaded(true)} />
       <div
         aria-hidden
         className="absolute inset-x-0 top-0 z-[2] flex h-full w-full items-start justify-center gap-[230px] desktop:z-[1] desktop:gap-[407px]"
@@ -80,7 +83,7 @@ export function HomeHero({
         <Container className="flex flex-col items-center gap-[32px] py-[24px] desktop:flex-row desktop:justify-center desktop:py-[130px]">
           <motion.div
             initial="hidden"
-            animate="visible"
+            animate={loaded ? "visible" : "hidden"}
             className="flex w-full max-w-[407px] flex-col items-center gap-[56px] desktop:max-w-none desktop:flex-1 desktop:items-start desktop:gap-[74px]"
           >
             <motion.div custom={0} variants={fadeUp} className="h-[42px] w-[250px] desktop:h-[56px] desktop:w-[334px]">
