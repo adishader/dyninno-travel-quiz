@@ -5,6 +5,7 @@ import "../globals.css";
 import { locales, isLocale } from "@/lib/i18n/locales";
 import { getDictionary } from "@/lib/i18n/getDictionary";
 import { QuizProvider } from "@/lib/quizState/QuizProvider";
+import { Analytics } from "@vercel/analytics/next";
 
 // Metropolis isn't in Google's font catalog (next/font/google can't resolve
 // it) — self-hosted here from the public-domain (Unlicense) release used by
@@ -49,6 +50,7 @@ export default async function LocaleLayout({
     <html lang={locale} className={metropolis.variable}>
       <body className={metropolis.className}>
         <QuizProvider>{children}</QuizProvider>
+        <Analytics />
       </body>
     </html>
   );
