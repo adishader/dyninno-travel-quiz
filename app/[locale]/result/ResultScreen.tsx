@@ -16,6 +16,10 @@ import { ResultCover } from "@/components/result/ResultCover";
 import { fadeUp } from "@/lib/animation/fadeUp";
 import type { Locale } from "@/lib/i18n/locales";
 
+// Safety ceiling: if the cover video is slow to buffer or fails to fire
+// canplay/error at all, the reveal must not stay hidden indefinitely.
+const MAX_COVER_WAIT_MS = 4000;
+
 interface ResultCopy {
   label: string;
   answersCaption: string;
@@ -36,13 +40,25 @@ export function ResultScreen({
 }) {
   const router = useRouter();
   const { state } = useQuiz();
-  const [loaded, setLoaded] = useState(false);
+  const [loadingDone, setLoadingDone] = useState(false);
+  const [coverReady, setCoverReady] = useState(false);
+  const loaded = loadingDone && coverReady;
 
   useEffect(() => {
     if (state.status !== "finished") {
       router.replace(`/${locale}`);
     }
   }, [state.status, locale, router]);
+
+  // The cover video keeps loading after the loading-screen's fixed counter
+  // finishes (it isn't part of the page-load signal that gates that timer),
+  // so without this the reveal would fire while the cover is still blank —
+  // exactly the "still loading" look this fixes. Ceiling covers a video
+  // that never fires canplay/error.
+  useEffect(() => {
+    const ceiling = setTimeout(() => setCoverReady(true), MAX_COVER_WAIT_MS);
+    return () => clearTimeout(ceiling);
+  }, []);
 
   if (state.status !== "finished") return null;
 
@@ -53,7 +69,7 @@ export function ResultScreen({
 
   return (
     <main className="relative isolate flex min-h-screen flex-col items-center overflow-hidden bg-fill-white">
-      <LoadingScreen onDone={() => setLoaded(true)} />
+      <LoadingScreen onDone={() => setLoadingDone(true)} />
       <div className="relative z-[4] w-full">
         <PageHeader />
       </div>
@@ -67,7 +83,7 @@ export function ResultScreen({
             className="flex w-full max-w-[542px] flex-col items-center gap-[42px] desktop:gap-[56px]"
           >
             <motion.div custom={0} variants={fadeUp} className="w-full">
-              <ResultCover videoSrc={coverVideoSrc} />
+              <ResultCover videoSrc={coverVideoSrc} onReady={() => setCoverReady(true)} />
             </motion.div>
 
             <div className="flex w-full flex-col items-center gap-[24px] desktop:gap-[32px]">
