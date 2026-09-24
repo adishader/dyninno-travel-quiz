@@ -13,7 +13,7 @@ const FADE_OUT_MS = 150;
 // signal to end, or a backgrounded tab could leave it stuck indefinitely.
 const MAX_LOADING_MS = 5000;
 
-export function LoadingScreen() {
+export function LoadingScreen({ onDone }: { onDone?: () => void } = {}) {
   const [count, setCount] = useState(0);
   const [countDone, setCountDone] = useState(false);
   const [pageLoaded, setPageLoaded] = useState(
@@ -73,8 +73,15 @@ export function LoadingScreen() {
 
   useEffect(() => {
     if (!fadingOut) return;
-    const timeout = setTimeout(() => setMounted(false), FADE_OUT_MS);
+    const timeout = setTimeout(() => {
+      setMounted(false);
+      onDone?.();
+    }, FADE_OUT_MS);
     return () => clearTimeout(timeout);
+    // onDone is a page-supplied callback, not reactive state; re-running
+    // this effect on every onDone identity change would break the one-shot
+    // fade-out timer.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fadingOut]);
 
   if (!mounted) return null;
