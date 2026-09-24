@@ -27,6 +27,7 @@ export default async function FinishPage({
         companyPlaceholder: dict["finish.company_dropdown_placeholder"],
         companyLabels,
         button: dict["finish.button"],
+        buttonLoading: dict["finish.button_loading"],
         policy: dict["finish.policy"],
       }}
     />

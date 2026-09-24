@@ -27,6 +27,7 @@ interface FinishCopy {
   companyPlaceholder: string;
   companyLabels: Record<CompanyOfficeOption, string>;
   button: string;
+  buttonLoading: string;
   policy: string;
 }
 
@@ -142,7 +143,7 @@ export function FinishScreen({ locale, copy }: { locale: Locale; copy: FinishCop
                   disabled={isSubmitting}
                   className="h-[56px] w-full gap-[6px] rounded-[18px] px-[18px] text-desktop-body-small-bold disabled:cursor-not-allowed disabled:opacity-60 desktop:h-[74px] desktop:gap-[10px] desktop:rounded-[24px] desktop:px-[24px] desktop:text-desktop-body-regular-bold"
                 >
-                  {copy.button}
+                  {isSubmitting ? copy.buttonLoading : copy.button}
                 </Button>
               </motion.div>
               {submitError && (
