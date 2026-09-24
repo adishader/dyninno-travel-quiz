@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect } from "react";
 import { motion, useMotionValue, useSpring, useTransform, type Variants } from "framer-motion";
 import { LinkButton } from "@/components/ui/Button";
@@ -9,6 +8,21 @@ import { BackgroundMap } from "@/components/layout/BackgroundMap";
 
 const DESKTOP_QUERY = "(min-width: 1025px)";
 const HERO_PARALLAX_PX = 10;
+const HERO_COVER_MASK_SRC = "/images/home/hero-cover-mask.svg";
+
+// Mask (not object-cover clipping) is what crops hero-cover-desk/mob into the
+// circular hero-cover shape, per the Figma hero-cover frame — same technique
+// as components/result/ResultCover.tsx.
+const maskStyle = {
+  maskImage: `url(${HERO_COVER_MASK_SRC})`,
+  maskSize: "contain",
+  maskRepeat: "no-repeat",
+  maskPosition: "center",
+  WebkitMaskImage: `url(${HERO_COVER_MASK_SRC})`,
+  WebkitMaskSize: "contain",
+  WebkitMaskRepeat: "no-repeat",
+  WebkitMaskPosition: "center",
+} as const;
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 16 },
@@ -22,8 +36,8 @@ const fadeUp: Variants = {
 export function HomeHero({
   locale,
   logoSrc,
-  heroImageDeskSrc,
-  heroImageMobSrc,
+  heroVideoDeskSrc,
+  heroVideoMobSrc,
   label,
   title,
   description,
@@ -31,8 +45,8 @@ export function HomeHero({
 }: {
   locale: string;
   logoSrc: string;
-  heroImageDeskSrc: string;
-  heroImageMobSrc: string;
+  heroVideoDeskSrc: string;
+  heroVideoMobSrc: string;
   label: string;
   title: string;
   description: string;
@@ -117,22 +131,28 @@ export function HomeHero({
           <div className="flex w-full justify-center desktop:relative desktop:h-[558px] desktop:flex-1 desktop:justify-start">
             <motion.div
               style={{ x: heroX, y: heroY }}
-              className="relative aspect-square w-full max-w-[542px] desktop:absolute desktop:left-0 desktop:top-[calc(50%+79px)] desktop:size-[860px] desktop:max-w-none desktop:-translate-y-1/2"
+              className="relative aspect-square w-full max-w-[540px] overflow-hidden desktop:absolute desktop:left-0 desktop:top-[calc(50%+79px)] desktop:size-[860px] desktop:max-w-none desktop:-translate-y-1/2"
             >
-              <Image
-                src={heroImageMobSrc}
-                alt=""
-                fill
-                priority
-                className="block rounded-full object-cover desktop:hidden"
-              />
-              <Image
-                src={heroImageDeskSrc}
-                alt=""
-                fill
-                priority
-                className="hidden rounded-full object-cover desktop:block"
-              />
+              <div className="absolute inset-0" style={maskStyle}>
+                <video
+                  className="absolute inset-0 block size-full object-cover desktop:hidden"
+                  src={heroVideoMobSrc}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  aria-hidden
+                />
+                <video
+                  className="absolute inset-0 hidden size-full object-cover desktop:block"
+                  src={heroVideoDeskSrc}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  aria-hidden
+                />
+              </div>
             </motion.div>
           </div>
         </Container>
