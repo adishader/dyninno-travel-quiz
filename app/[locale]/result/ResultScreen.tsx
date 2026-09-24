@@ -21,7 +21,7 @@ interface ResultCopy {
   timeCaption: string;
   noteTitle: string;
   noteDescription: string;
-  brackets: Record<ResultBracket, { title: string; description: string; coverPhotoSrc: string }>;
+  brackets: Record<ResultBracket, { title: string; description: string; coverVideoSrc: string }>;
 }
 
 export function ResultScreen({
@@ -46,7 +46,7 @@ export function ResultScreen({
 
   const score = getScore(state);
   const bracket = getResultBracket(score);
-  const { title, description, coverPhotoSrc } = copy.brackets[bracket];
+  const { title, description, coverVideoSrc } = copy.brackets[bracket];
   const time = formatElapsed(state.finalElapsedSeconds ?? state.elapsedSeconds);
 
   return (
@@ -64,7 +64,7 @@ export function ResultScreen({
             className="flex w-full max-w-[542px] flex-col items-center gap-[42px] desktop:gap-[56px]"
           >
             <motion.div custom={0} variants={fadeUp} className="w-full">
-              <ResultCover photoSrc={coverPhotoSrc} />
+              <ResultCover videoSrc={coverVideoSrc} />
             </motion.div>
 
             <div className="flex w-full flex-col items-center gap-[24px] desktop:gap-[32px]">

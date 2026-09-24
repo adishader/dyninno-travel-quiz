@@ -1,9 +1,7 @@
-import Image from "next/image";
-
 // The mask shape is breakpoint-specific (Figma: separate mask SVGs per
 // frame), so this renders two stacked, breakpoint-toggled masked layers
-// rather than one fluid mask — same pattern as the Home hero image swap.
-function MaskedPhoto({ maskSrc, photoSrc, className }: { maskSrc: string; photoSrc: string; className: string }) {
+// rather than one fluid mask — same pattern as the Home hero video.
+function MaskedVideo({ maskSrc, videoSrc, className }: { maskSrc: string; videoSrc: string; className: string }) {
   return (
     <div
       className={`absolute inset-0 ${className}`}
@@ -18,22 +16,36 @@ function MaskedPhoto({ maskSrc, photoSrc, className }: { maskSrc: string; photoS
         WebkitMaskPosition: "center",
       }}
     >
-      <Image src={photoSrc} alt="" fill priority className="object-cover" />
+      <video
+        className="absolute inset-0 size-full object-cover"
+        src={videoSrc}
+        autoPlay
+        loop
+        muted
+        playsInline
+        aria-hidden
+      />
     </div>
   );
 }
 
-export function ResultCover({ photoSrc }: { photoSrc: string }) {
+export function ResultCover({ videoSrc }: { videoSrc: string }) {
   return (
-    <div className="relative aspect-[460/306] w-full max-w-[345.75px] shrink-0 overflow-hidden desktop:h-[306px] desktop:w-[460px] desktop:max-w-none">
-      <MaskedPhoto
+    // mx-auto: this sits inside a `w-full` fade-in wrapper (see ResultScreen),
+    // not directly as a flex child of the centered column like in Figma, so it
+    // needs its own centering rather than inheriting items-center from a
+    // grandparent — without it the block hugs the left edge whenever its
+    // parent is wider than this block's own max-width (e.g. tablet-width
+    // "mobile" layouts, or desktop's fixed 460px inside a wider column).
+    <div className="relative mx-auto aspect-[460/306] w-full max-w-[345.75px] shrink-0 overflow-hidden desktop:h-[306px] desktop:w-[460px] desktop:max-w-none">
+      <MaskedVideo
         maskSrc="/images/result/result-cover-mask-mob.svg"
-        photoSrc={photoSrc}
+        videoSrc={videoSrc}
         className="block desktop:hidden"
       />
-      <MaskedPhoto
+      <MaskedVideo
         maskSrc="/images/result/result-cover-mask-desk.svg"
-        photoSrc={photoSrc}
+        videoSrc={videoSrc}
         className="hidden desktop:block"
       />
     </div>
