@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect } from "react";
-import { motion, useMotionValue, useSpring, useTransform, type Variants } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { LinkButton } from "@/components/ui/Button";
 import { Container } from "@/components/layout/Container";
 import { BackgroundMap } from "@/components/layout/BackgroundMap";
+import { fadeUp } from "@/lib/animation/fadeUp";
 
 const DESKTOP_QUERY = "(min-width: 1025px)";
 const HERO_PARALLAX_PX = 10;
@@ -23,15 +24,6 @@ const maskStyle = {
   WebkitMaskRepeat: "no-repeat",
   WebkitMaskPosition: "center",
 } as const;
-
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 16 },
-  visible: (delay: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: "easeOut", delay },
-  }),
-};
 
 export function HomeHero({
   locale,

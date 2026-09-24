@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 import { useQuiz } from "@/lib/quizState/QuizProvider";
 import { formatElapsed } from "@/lib/quiz/formatTime";
 import { getFeedbackPool, pickFeedbackMessage } from "@/lib/quiz/feedbackMessages";
@@ -13,6 +14,7 @@ import { BackgroundMap } from "@/components/layout/BackgroundMap";
 import { AnswerOption, type AnswerOptionState } from "@/components/quiz/AnswerOption";
 import { SubmitAnswerButton, type SubmitButtonVariant } from "@/components/quiz/SubmitAnswerButton";
 import { TimerBadge } from "@/components/quiz/TimerBadge";
+import { fadeUp } from "@/lib/animation/fadeUp";
 import type { Locale } from "@/lib/i18n/locales";
 import type { OptionLetter, QuizQuestion } from "@/lib/quiz/types";
 
@@ -88,11 +90,19 @@ function QuestionCard({
     : `${t(dict, "quiz.submit_button_default")} ${question.id}/${questionCount}`;
 
   return (
-    <div className="flex w-full max-w-[542px] flex-col items-center gap-[24px]">
-      <p className="w-full text-center text-mobile-body-regular-bold text-[#242831] desktop:text-desktop-body-regular-bold">
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      className="flex w-full max-w-[542px] flex-col items-center gap-[24px]"
+    >
+      <motion.p
+        custom={0}
+        variants={fadeUp}
+        className="w-full text-center text-mobile-body-regular-bold text-[#242831] desktop:text-desktop-body-regular-bold"
+      >
         {question.question}
-      </p>
-      <div className="flex w-full flex-col items-start gap-[6px] desktop:gap-[8px]">
+      </motion.p>
+      <motion.div custom={0.1} variants={fadeUp} className="flex w-full flex-col items-start gap-[6px] desktop:gap-[8px]">
         {question.options.map((option) => (
           <AnswerOption
             key={option.letter}
@@ -103,16 +113,20 @@ function QuestionCard({
             {option.text}
           </AnswerOption>
         ))}
-      </div>
-      <SubmitAnswerButton
-        variant={getSubmitVariant(selected, feedback)}
-        disabled={!selected || !!feedback}
-        onClick={handleSubmit}
-      >
-        {submitLabel}
-      </SubmitAnswerButton>
-      <TimerBadge label={elapsedLabel} />
-    </div>
+      </motion.div>
+      <motion.div custom={0.2} variants={fadeUp} className="w-full">
+        <SubmitAnswerButton
+          variant={getSubmitVariant(selected, feedback)}
+          disabled={!selected || !!feedback}
+          onClick={handleSubmit}
+        >
+          {submitLabel}
+        </SubmitAnswerButton>
+      </motion.div>
+      <motion.div custom={0.3} variants={fadeUp}>
+        <TimerBadge label={elapsedLabel} />
+      </motion.div>
+    </motion.div>
   );
 }
 

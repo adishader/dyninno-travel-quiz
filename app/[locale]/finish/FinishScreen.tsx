@@ -2,6 +2,7 @@
 
 import { useEffect, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 import { useQuiz } from "@/lib/quizState/QuizProvider";
 import { getScore } from "@/lib/quizState/reducer";
 import { formatElapsed } from "@/lib/quiz/formatTime";
@@ -14,6 +15,7 @@ import { BackgroundMap } from "@/components/layout/BackgroundMap";
 import { Button } from "@/components/ui/Button";
 import { FormInput } from "@/components/ui/FormInput";
 import { FormSelect } from "@/components/ui/FormSelect";
+import { fadeUp } from "@/lib/animation/fadeUp";
 import type { Locale } from "@/lib/i18n/locales";
 
 interface FinishCopy {
@@ -81,50 +83,68 @@ export function FinishScreen({ locale, copy }: { locale: Locale; copy: FinishCop
       </div>
       <section className="relative z-[3] flex w-full flex-1 flex-col items-center desktop:justify-center">
         <Container className="flex flex-col items-center py-[56px]">
-          <div className="flex w-full max-w-[407px] flex-col items-center gap-[24px]">
-            <p className="w-full text-center text-mobile-body-medium-bold text-text-primary desktop:text-desktop-body-medium-bold">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            className="flex w-full max-w-[407px] flex-col items-center gap-[24px]"
+          >
+            <motion.p
+              custom={0}
+              variants={fadeUp}
+              className="w-full text-center text-mobile-body-medium-bold text-text-primary desktop:text-desktop-body-medium-bold"
+            >
               <span className="block">{copy.titleEmoji}</span>
               <span className="block">{copy.title}</span>
               <span className="block">{copy.subtitle}</span>
-            </p>
+            </motion.p>
 
             <form onSubmit={handleSubmit} noValidate className="flex w-full flex-col items-start gap-[10px] desktop:gap-[13px]">
-              <p className="w-full text-center text-mobile-body-regular text-text-primary desktop:text-desktop-body-regular">
+              <motion.p
+                custom={0.1}
+                variants={fadeUp}
+                className="w-full text-center text-mobile-body-regular text-text-primary desktop:text-desktop-body-regular"
+              >
                 {copy.formSubheading}
-              </p>
+              </motion.p>
 
-              <FormInput
-                type="text"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                placeholder={copy.nameLabel}
-                error={nameError}
-                aria-label={copy.nameLabel}
-              />
+              <motion.div custom={0.2} variants={fadeUp} className="w-full">
+                <FormInput
+                  type="text"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  placeholder={copy.nameLabel}
+                  error={nameError}
+                  aria-label={copy.nameLabel}
+                />
+              </motion.div>
 
-              <FormSelect
-                value={companyOffice}
-                onChange={(e) => setCompanyOffice(e.target.value as CompanyOfficeOption)}
-                error={companyError}
-                aria-label={copy.companyPlaceholder}
-              >
-                <option value="" disabled>
-                  {copy.companyPlaceholder}
-                </option>
-                {companyOfficeOptions.map((option) => (
-                  <option key={option} value={option}>
-                    {copy.companyLabels[option]}
+              <motion.div custom={0.3} variants={fadeUp} className="w-full">
+                <FormSelect
+                  value={companyOffice}
+                  onChange={(e) => setCompanyOffice(e.target.value as CompanyOfficeOption)}
+                  error={companyError}
+                  aria-label={copy.companyPlaceholder}
+                >
+                  <option value="" disabled>
+                    {copy.companyPlaceholder}
                   </option>
-                ))}
-              </FormSelect>
+                  {companyOfficeOptions.map((option) => (
+                    <option key={option} value={option}>
+                      {copy.companyLabels[option]}
+                    </option>
+                  ))}
+                </FormSelect>
+              </motion.div>
 
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                className="h-[56px] w-full gap-[6px] rounded-[18px] px-[18px] text-desktop-body-small-bold disabled:cursor-not-allowed disabled:opacity-60 desktop:h-[74px] desktop:gap-[10px] desktop:rounded-[24px] desktop:px-[24px] desktop:text-desktop-body-regular-bold"
-              >
-                {copy.button}
-              </Button>
+              <motion.div custom={0.4} variants={fadeUp} className="w-full">
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="h-[56px] w-full gap-[6px] rounded-[18px] px-[18px] text-desktop-body-small-bold disabled:cursor-not-allowed disabled:opacity-60 desktop:h-[74px] desktop:gap-[10px] desktop:rounded-[24px] desktop:px-[24px] desktop:text-desktop-body-regular-bold"
+                >
+                  {copy.button}
+                </Button>
+              </motion.div>
               {submitError && (
                 <p role="alert" className="w-full text-center text-desktop-body-small text-[#fa3737]">
                   Something went wrong submitting your result — please try again.
@@ -132,8 +152,14 @@ export function FinishScreen({ locale, copy }: { locale: Locale; copy: FinishCop
               )}
             </form>
 
-            <p className="w-full text-center text-desktop-body-tiny-bold text-text-secondary">{copy.policy}</p>
-          </div>
+            <motion.p
+              custom={0.5}
+              variants={fadeUp}
+              className="w-full text-center text-desktop-body-tiny-bold text-text-secondary"
+            >
+              {copy.policy}
+            </motion.p>
+          </motion.div>
         </Container>
       </section>
     </main>
