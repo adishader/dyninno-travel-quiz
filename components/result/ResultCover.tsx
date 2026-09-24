@@ -1,7 +1,17 @@
 // The mask shape is breakpoint-specific (Figma: separate mask SVGs per
 // frame), so this renders two stacked, breakpoint-toggled masked layers
 // rather than one fluid mask — same pattern as the Home hero video.
-function MaskedVideo({ maskSrc, videoSrc, className }: { maskSrc: string; videoSrc: string; className: string }) {
+function MaskedVideo({
+  maskSrc,
+  videoSrc,
+  className,
+  onReady,
+}: {
+  maskSrc: string;
+  videoSrc: string;
+  className: string;
+  onReady?: () => void;
+}) {
   return (
     <div
       className={`absolute inset-0 ${className}`}
@@ -23,13 +33,15 @@ function MaskedVideo({ maskSrc, videoSrc, className }: { maskSrc: string; videoS
         loop
         muted
         playsInline
+        onCanPlay={onReady}
+        onError={onReady}
         aria-hidden
       />
     </div>
   );
 }
 
-export function ResultCover({ videoSrc }: { videoSrc: string }) {
+export function ResultCover({ videoSrc, onReady }: { videoSrc: string; onReady?: () => void }) {
   return (
     // mx-auto: this sits inside a `w-full` fade-in wrapper (see ResultScreen),
     // not directly as a flex child of the centered column like in Figma, so it
@@ -42,11 +54,13 @@ export function ResultCover({ videoSrc }: { videoSrc: string }) {
         maskSrc="/images/result/result-cover-mask-mob.svg"
         videoSrc={videoSrc}
         className="block desktop:hidden"
+        onReady={onReady}
       />
       <MaskedVideo
         maskSrc="/images/result/result-cover-mask-desk.svg"
         videoSrc={videoSrc}
         className="hidden desktop:block"
+        onReady={onReady}
       />
     </div>
   );
