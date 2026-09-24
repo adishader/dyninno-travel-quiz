@@ -11,6 +11,7 @@ import { Container } from "@/components/layout/Container";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { BackgroundLines } from "@/components/layout/BackgroundLines";
 import { BackgroundMap } from "@/components/layout/BackgroundMap";
+import { LoadingScreen } from "@/components/layout/LoadingScreen";
 import { ResultCover } from "@/components/result/ResultCover";
 import { fadeUp } from "@/lib/animation/fadeUp";
 import type { Locale } from "@/lib/i18n/locales";
@@ -51,6 +52,7 @@ export function ResultScreen({
 
   return (
     <main className="relative isolate flex min-h-screen flex-col items-center overflow-hidden bg-fill-white">
+      <LoadingScreen />
       <div className="relative z-[4] w-full">
         <PageHeader />
       </div>

@@ -142,8 +142,8 @@ Match each frame's styling to its corresponding UI state in code exactly, rather
 - Images are grouped into sections by usage context: **Home page**, **Result page**, **Other**, **Opengraph image**, **Favicon image**.
 - For each image, follow the **export settings already defined in the Figma file** (format/size per image) rather than assuming a default.
 - **Home page** images have separate Desktop and Mobile versions — file naming: `-desk` and `-mob` suffixes (e.g. `home-hero-desk`, `home-hero-mob`).
-- **Opengraph images**: two locale-specific versions — `travel-day-quiz-og-en` and `travel-day-quiz-og-es`, used on the `/en` and `/es` pages respectively.
-- **Favicon**: use the image provided in the Favicon section of the Figma file.
+- **Opengraph images**: two locale-specific versions — `travel-day-quiz-og-en` and `travel-day-quiz-og-es`, used on the `/en` and `/es` pages respectively. Direct Figma link: https://www.figma.com/design/RWPLFFvtvIZ4qJNxVnn6CU/Trevolution.-Travel-Day-Quiz?node-id=4203-6917&t=NBLumTZqzUbsX5jU-1
+- **Favicon**: use the image provided in the Favicon section of the Figma file. Direct Figma link: https://www.figma.com/design/RWPLFFvtvIZ4qJNxVnn6CU/Trevolution.-Travel-Day-Quiz?node-id=4203-6975&t=NBLumTZqzUbsX5jU-1
 - After exporting from Figma, **compress `.jpg` and `.png` images to `.webp`** without visible quality loss. Do **not** convert `.svg` files — leave those as-is.
 
 ### Design System (separate Figma file)
@@ -161,6 +161,14 @@ Use **only** the following as the source of truth for these design system elemen
 - **Interactive elements** (Button, Dropdown, Input): on any state change, use `cursor: pointer`, easing `ease-out`, transition duration `300ms`.
 - **Page load**: page elements use a slight staggered fade-in animation after the page loads — duration `600ms`, easing `ease-out`.
 - **Home page — cursor parallax (Desktop only)**: add a slight horizontal parallax effect tied to the user's cursor movement, applied to two elements: the background image `bg-img-map` (max offset `5px` each direction) and the Hero cover element `hero-cover-desk` (max offset `10px` each direction). Desktop-only — no parallax on Mobile.
+
+### Loading Screen (Home page and Result pages)
+- A loading screen is shown on **Home** and **Result** pages while the page is loading.
+- Content: a numeric counter animating from `0` to `100%`, with the word "loading" displayed below it.
+  - Counter number: uses the project's typeface, sized at the **H1** type scale.
+  - "loading" text: uses the project's typeface, sized at the **body text** scale.
+- Layout: the loading block (counter + text) is centered both horizontally and vertically. The loading screen itself covers the full browser viewport (`100vw` × `100vh`) on both Desktop and Mobile.
+- Transition out: once the page is fully loaded, the loading screen fades out over `150ms`, then the page content is shown.
 
 ---
 

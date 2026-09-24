@@ -22,6 +22,12 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
+// No custom domain connected yet (CLAUDE.md: "to be connected in Vercel once
+// build is stable") — VERCEL_URL is auto-injected on every Vercel deploy
+// (including previews), so this stays correct without further changes once
+// a custom domain is added there.
+const SITE_URL = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000";
+
 export async function generateMetadata({
   params,
 }: {
@@ -30,9 +36,20 @@ export async function generateMetadata({
   const { locale } = await params;
   if (!isLocale(locale)) return {};
   const dict = await getDictionary(locale);
+  const title = dict["home.title"];
+  const description = dict["home.description"];
+
   return {
-    title: dict["home.title"],
-    description: dict["home.description"],
+    metadataBase: new URL(SITE_URL),
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: "website",
+      locale: locale === "es" ? "es_ES" : "en_US",
+      images: [{ url: `/images/other/travel-day-quiz-og-${locale}.webp`, width: 1200, height: 630 }],
+    },
   };
 }
 

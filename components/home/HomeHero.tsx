@@ -5,6 +5,7 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { LinkButton } from "@/components/ui/Button";
 import { Container } from "@/components/layout/Container";
 import { BackgroundMap } from "@/components/layout/BackgroundMap";
+import { LoadingScreen } from "@/components/layout/LoadingScreen";
 import { fadeUp } from "@/lib/animation/fadeUp";
 
 const DESKTOP_QUERY = "(min-width: 1025px)";
@@ -65,6 +66,7 @@ export function HomeHero({
 
   return (
     <main className="relative isolate min-h-screen overflow-hidden bg-fill-white">
+      <LoadingScreen />
       <div
         aria-hidden
         className="absolute inset-x-0 top-0 z-[2] flex h-full w-full items-start justify-center gap-[230px] desktop:z-[1] desktop:gap-[407px]"
