@@ -162,6 +162,14 @@ Use **only** the following as the source of truth for these design system elemen
 - **Page load**: page elements use a slight staggered fade-in animation after the page loads — duration `600ms`, easing `ease-out`.
 - **Home page — cursor parallax (Desktop only)**: add a slight horizontal parallax effect tied to the user's cursor movement, applied to two elements: the background image `bg-img-map` (max offset `5px` each direction) and the Hero cover element `hero-cover-desk` (max offset `10px` each direction). Desktop-only — no parallax on Mobile.
 
+### Loading Screen (Home page and Result pages)
+- A loading screen is shown on **Home** and **Result** pages while the page is loading.
+- Content: a numeric counter animating from `0` to `100%`, with the word "loading" displayed below it.
+  - Counter number: uses the project's typeface, sized at the **H1** type scale.
+  - "loading" text: uses the project's typeface, sized at the **body text** scale.
+- Layout: the loading block (counter + text) is centered both horizontally and vertically. The loading screen itself covers the full browser viewport (`100vw` × `100vh`) on both Desktop and Mobile.
+- Transition out: once the page is fully loaded, the loading screen fades out over `150ms`, then the page content is shown.
+
 ---
 
 ## Tech Stack
