@@ -142,8 +142,8 @@ Match each frame's styling to its corresponding UI state in code exactly, rather
 - Images are grouped into sections by usage context: **Home page**, **Result page**, **Other**, **Opengraph image**, **Favicon image**.
 - For each image, follow the **export settings already defined in the Figma file** (format/size per image) rather than assuming a default.
 - **Home page** images have separate Desktop and Mobile versions — file naming: `-desk` and `-mob` suffixes (e.g. `home-hero-desk`, `home-hero-mob`).
-- **Opengraph images**: two locale-specific versions — `travel-day-quiz-og-en` and `travel-day-quiz-og-es`, used on the `/en` and `/es` pages respectively.
-- **Favicon**: use the image provided in the Favicon section of the Figma file.
+- **Opengraph images**: two locale-specific versions — `travel-day-quiz-og-en` and `travel-day-quiz-og-es`, used on the `/en` and `/es` pages respectively. Direct Figma link: https://www.figma.com/design/RWPLFFvtvIZ4qJNxVnn6CU/Trevolution.-Travel-Day-Quiz?node-id=4203-6917&t=NBLumTZqzUbsX5jU-1
+- **Favicon**: use the image provided in the Favicon section of the Figma file. Direct Figma link: https://www.figma.com/design/RWPLFFvtvIZ4qJNxVnn6CU/Trevolution.-Travel-Day-Quiz?node-id=4203-6975&t=NBLumTZqzUbsX5jU-1
 - After exporting from Figma, **compress `.jpg` and `.png` images to `.webp`** without visible quality loss. Do **not** convert `.svg` files — leave those as-is.
 
 ### Design System (separate Figma file)
