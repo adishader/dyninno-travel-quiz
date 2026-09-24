@@ -9,6 +9,7 @@ import { t, type Dictionary } from "@/lib/i18n/getDictionary";
 import { Container } from "@/components/layout/Container";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { BackgroundLines } from "@/components/layout/BackgroundLines";
+import { BackgroundMap } from "@/components/layout/BackgroundMap";
 import { AnswerOption, type AnswerOptionState } from "@/components/quiz/AnswerOption";
 import { SubmitAnswerButton, type SubmitButtonVariant } from "@/components/quiz/SubmitAnswerButton";
 import { TimerBadge } from "@/components/quiz/TimerBadge";
@@ -146,11 +147,12 @@ export function QuizScreen({
 
   return (
     <main className="relative isolate flex min-h-screen flex-col items-center overflow-hidden bg-fill-white">
-      <BackgroundLines />
-      <div className="relative z-[3] w-full">
+      <BackgroundMap zIndexClassName="z-[1]" />
+      <BackgroundLines zIndexClassName="z-[2]" />
+      <div className="relative z-[4] w-full">
         <PageHeader />
       </div>
-      <section className="relative z-[2] flex w-full flex-1 flex-col items-center desktop:justify-center">
+      <section className="relative z-[3] flex w-full flex-1 flex-col items-center desktop:justify-center">
         <Container className="flex flex-col items-center py-[56px]">
           <QuestionCard
             key={question.id}

@@ -14,7 +14,6 @@ export default async function HomePage({
     <HomeHero
       locale={locale}
       logoSrc="/images/home/home-logo.svg"
-      mapBgSrc="/images/home/home-map-bg.svg"
       heroImageDeskSrc="/images/home/home-hero-desk.webp"
       heroImageMobSrc="/images/home/home-hero-mob.webp"
       label={dict["home.label"]}

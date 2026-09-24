@@ -5,9 +5,9 @@ import { useEffect } from "react";
 import { motion, useMotionValue, useSpring, useTransform, type Variants } from "framer-motion";
 import { LinkButton } from "@/components/ui/Button";
 import { Container } from "@/components/layout/Container";
+import { BackgroundMap } from "@/components/layout/BackgroundMap";
 
 const DESKTOP_QUERY = "(min-width: 1025px)";
-const MAP_PARALLAX_PX = 5;
 const HERO_PARALLAX_PX = 10;
 
 const fadeUp: Variants = {
@@ -22,7 +22,6 @@ const fadeUp: Variants = {
 export function HomeHero({
   locale,
   logoSrc,
-  mapBgSrc,
   heroImageDeskSrc,
   heroImageMobSrc,
   label,
@@ -32,7 +31,6 @@ export function HomeHero({
 }: {
   locale: string;
   logoSrc: string;
-  mapBgSrc: string;
   heroImageDeskSrc: string;
   heroImageMobSrc: string;
   label: string;
@@ -56,8 +54,6 @@ export function HomeHero({
   }, [pointerX, pointerY]);
 
   const springConfig = { stiffness: 60, damping: 20 };
-  const mapX = useSpring(useTransform(pointerX, [-0.5, 0.5], [MAP_PARALLAX_PX, -MAP_PARALLAX_PX]), springConfig);
-  const mapY = useSpring(useTransform(pointerY, [-0.5, 0.5], [MAP_PARALLAX_PX, -MAP_PARALLAX_PX]), springConfig);
   const heroX = useSpring(useTransform(pointerX, [-0.5, 0.5], [HERO_PARALLAX_PX, -HERO_PARALLAX_PX]), springConfig);
   const heroY = useSpring(useTransform(pointerY, [-0.5, 0.5], [HERO_PARALLAX_PX, -HERO_PARALLAX_PX]), springConfig);
 
@@ -72,16 +68,7 @@ export function HomeHero({
         ))}
       </div>
 
-      <motion.div
-        aria-hidden
-        style={{ x: mapX, y: mapY }}
-        className="absolute left-1/2 top-0 z-[1] h-[306px] w-[787px] -translate-x-1/2 overflow-hidden desktop:z-[2] desktop:h-[560px] desktop:w-[1440px]"
-      >
-        <div className="absolute inset-[-22.32%_3.47%_0.54%_3.4%]">
-          {/* eslint-disable-next-line @next/next/no-img-element -- decorative SVG illustration, not a Next/Image candidate */}
-          <img src={mapBgSrc} alt="" className="block size-full" />
-        </div>
-      </motion.div>
+      <BackgroundMap zIndexClassName="z-[1] desktop:z-[2]" />
 
       <section className="relative z-[3] flex flex-col items-center">
         <Container className="flex flex-col items-center gap-[32px] py-[24px] desktop:flex-row desktop:justify-center desktop:py-[130px]">
