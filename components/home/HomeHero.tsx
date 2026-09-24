@@ -72,7 +72,7 @@ export function HomeHero({
   const heroY = useSpring(useTransform(pointerY, [-0.5, 0.5], [HERO_PARALLAX_PX, -HERO_PARALLAX_PX]), springConfig);
 
   return (
-    <main className="relative isolate overflow-hidden bg-fill-white">
+    <main className="relative isolate min-h-screen overflow-hidden bg-fill-white">
       <div
         aria-hidden
         className="absolute inset-x-0 top-0 z-[2] flex h-full w-full items-start justify-center gap-[230px] desktop:z-[1] desktop:gap-[407px]"
@@ -84,7 +84,7 @@ export function HomeHero({
 
       <BackgroundMap zIndexClassName="z-[1] desktop:z-[2]" />
 
-      <section className="relative z-[3] flex flex-col items-center">
+      <section className="relative z-[3] flex w-full flex-1 flex-col items-center">
         <Container className="flex flex-col items-center gap-[32px] py-[24px] desktop:flex-row desktop:justify-center desktop:py-[130px]">
           <motion.div
             initial="hidden"
