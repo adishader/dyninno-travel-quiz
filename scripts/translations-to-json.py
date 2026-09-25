@@ -16,9 +16,6 @@ SOURCE = ROOT / "project-docs" / "quiz-translations-EN-ES.xlsx"
 OUT_DIR = ROOT / "lib" / "i18n" / "dictionaries"
 
 KEY_PATTERN = re.compile(r"^[a-z0-9_]+(\.[a-z0-9_]+)+$", re.IGNORECASE)
-# Company office dropdown options are intentionally English-only (per CLAUDE.md);
-# their Spanish cells are blank on purpose, so fall back to the English text.
-UNTRANSLATED_PREFIX = "finish.company_option."
 
 
 def main() -> None:
@@ -39,11 +36,8 @@ def main() -> None:
             continue
 
         if es_text is None:
-            if key.startswith(UNTRANSLATED_PREFIX):
-                es_text = en_text
-            else:
-                errors.append(f'"{key}" is missing its Spanish text')
-                continue
+            errors.append(f'"{key}" is missing its Spanish text')
+            continue
 
         en[key] = str(en_text)
         es[key] = str(es_text)
